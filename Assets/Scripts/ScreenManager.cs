@@ -4,19 +4,13 @@ using UnityEngine;
 
 public class ScreenManager : MonoBehaviour
 {
-    private void Update()
+    public float orthographicSize = 5;
+    public float aspect = 1f;
+    void Start()
     {
-        ChangeGameSize();
-    }
-
-    private void ChangeGameSize()
-    {
-        float width = Screen.width;
-        float height = Screen.height;
-        float widthRatio = transform.localScale.x / width;
-        float heightRatio = transform.localScale.y / height;
-        float ratio = Mathf.Min(widthRatio, heightRatio);
-
-        transform.localScale = new Vector3(width * ratio, height * ratio, 1);
+        Camera.main.projectionMatrix = Matrix4x4.Ortho(
+                -orthographicSize * aspect, orthographicSize * aspect,
+                -orthographicSize, orthographicSize,
+                Camera.main.nearClipPlane, Camera.main.farClipPlane);
     }
 }
